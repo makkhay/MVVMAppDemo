@@ -7,6 +7,10 @@ import com.example.mvvmappdemo.models.NicePlace;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This repository class helps to make db query, api calls to servers. The data that this class receives will be sent to ViewModel class
+ *  Singleton pattern ; because you only want to create one instance so that you won't a bunch of instances of database objects and caches.
+ */
 public class NicePlaceRepository {
 
     private static NicePlaceRepository instance;
@@ -20,6 +24,7 @@ public class NicePlaceRepository {
         return instance;
     }
 
+    // this is the method where you would want to make db query or make api calls to get the data
     public MutableLiveData<List<NicePlace>> getNicePlaces(){
         setNicePlaces();
 

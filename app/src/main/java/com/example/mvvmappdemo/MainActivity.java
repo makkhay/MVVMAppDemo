@@ -17,7 +17,9 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
-
+/**
+ * this activity will receive the data and observe the data from the LiveData(ViewModel class)
+ */
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
@@ -26,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private RecyclerAdapter mAdapter;
     private ProgressBar mProgressBar;
+    // Create a new ViewModel object
     private MainActivityViewModel mMainActivityViewModel;
 
     @Override
@@ -36,10 +39,12 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView = findViewById(R.id.recycler_view);
         mProgressBar = findViewById(R.id.progress_bar);
 
+        // newly created ViewModel Object
         mMainActivityViewModel = ViewModelProviders.of(this).get(MainActivityViewModel.class);
 
         mMainActivityViewModel.init();
 
+        // observe changes done to our livedata/ViewModel object
         mMainActivityViewModel.getNicePlaces().observe(this, new Observer<List<NicePlace>>() {
             @Override
             public void onChanged(List<NicePlace> nicePlaces) {

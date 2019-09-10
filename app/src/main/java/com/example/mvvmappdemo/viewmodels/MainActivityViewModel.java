@@ -1,5 +1,6 @@
 package com.example.mvvmappdemo.viewmodels;
 
+import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
@@ -25,20 +26,25 @@ public class MainActivityViewModel extends ViewModel {
      *     LiveData cannot be changed directly but it can be changed indirectly via MutableLiveData
       */
     private MutableLiveData<List<NicePlace>> mNicePlaces;
+    // Instantiate our repository
     private NicePlaceRepository mRepo;
+    // determine when a query is getting made in our database or api.
     private MutableLiveData<Boolean> mIsUpdating = new MutableLiveData<>();
 
-
+    // init repo and get the mutable live data list from the repo
     public void init(){
         if(mNicePlaces != null){
             return;
         }
 
         mRepo = NicePlaceRepository.getInstance();
+        // get mutablelive data list from the repo
         mNicePlaces = mRepo.getNicePlaces();
 
     }
 
+    // it will add another new item to our mutablelivedata list
+    @SuppressLint("StaticFieldLeak")
     public void addNewValues(final NicePlace nicePlace){
         mIsUpdating.setValue(true);
 
@@ -47,6 +53,7 @@ public class MainActivityViewModel extends ViewModel {
             @Override
             protected void onPostExecute(Void aVoid) {
                 super.onPostExecute(aVoid);
+                // add a new item into our existing list
                 List<NicePlace> currentPlaces = mNicePlaces.getValue();
                 currentPlaces.add(nicePlace);
                 mNicePlaces.postValue(currentPlaces);
